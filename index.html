@@ -415,6 +415,28 @@
    </div>
   </div>
   <script>
+  // Call Draftlio backend (Gemini essay feedback)
+async function analyzeEssayWithGemini({ text, wordCount, category, prompt, college }) {
+  const res = await fetch("https://draftlio-api.vercel.app/api/draftlio", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      essayText: text,
+      wordCount,
+      category,
+      prompt,
+      college
+    })
+  });
+
+  if (!res.ok) {
+    throw new Error("API error");
+  }
+
+  const data = await res.json();
+  return data.feedback; // { bigpicture, structure, specificity, sentence }
+}
+
     const defaultConfig = {
       background_color: "#0a0a0a",
       card_color: "#1a1a1a",
