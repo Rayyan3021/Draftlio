@@ -988,8 +988,18 @@ try {
     const ctx = canvas.getContext('2d');
     let gameRunning = false;
     let gameScore = 0;
-    let scribbles = { x: 80, y: 250, width: 40, height: 40, velocity: 0, gravity: 0.5, jump: -8 };
-    let pipes = [];
+   let scribbles = {
+  x: 80,
+  y: 250,
+  width: 40,
+  height: 40,
+  velocity: 0,
+  gravity: 0.25,   // slower fall
+  jump: -6         // smoother jump
+};
+
+   pipe.x -= 2;   // slower pipes
+
     let frameCount = 0;
     let gameInterval;
 
