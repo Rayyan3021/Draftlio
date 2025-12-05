@@ -667,10 +667,25 @@ async function analyzeEssayWithGemini({ text, wordCount, category, prompt, colle
       const submitBtn = document.querySelector('#essay-form button[type="submit"]');
       submitBtn.disabled = true;
 
-      // Simulate analysis
-      await new Promise(resolve => setTimeout(resolve, 1500));
+     
 
-      const feedback = generateEssayFeedback(text, wordCount);
+     let feedback;
+try {
+  feedback = await analyzeEssayWithGemini({
+    text,
+    wordCount,
+    category: document.getElementById('essay-category').value,
+    prompt: document.getElementById('supplemental-prompt')?.value || document.getElementById('commonapp-prompt')?.value || '',
+    college: document.getElementById('college-name')?.value || ''
+  });
+} catch (err) {
+  console.error(err);
+  showToast('Draftlio AI had an error. Try again.');
+  isSubmitting = false;
+  submitBtn.disabled = false;
+  return;
+}
+
       
       document.getElementById('feedback-bigpicture').textContent = feedback.bigpicture;
       document.getElementById('feedback-structure').textContent = feedback.structure;
